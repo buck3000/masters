@@ -1,7 +1,8 @@
 class User < ActiveRecord::Base
 	
-	validate :email, presence: true
-	validate :name, presence: true
+	validates :name, :length => { :minimum => 4, :message => "must be at least 4 characters, fool!" }
+	validates :name, :email, presence: true
+	validates :email, uniqueness: true, format: /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/
 
 	has_many :teams
 

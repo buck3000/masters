@@ -17,13 +17,18 @@ require 'faker'
 	puts "-"*50
 end
 
-200.times do
+20.times do
 	Group.create(name: Faker::Lorem.word)
-
 end
 
-20.times do
+200.times do
 	Team.create(name: Faker::Lorem.word, user_id: User.all.sample.id, group_id: Group.all.sample.id)
+end
+
+Team.all.each do |team|
+	6.times do 
+		GolfersTeam.create(golfer_id: Golfer.all.sample.id, team_id: team.id)
+	end
 end
 
 
