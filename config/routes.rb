@@ -1,4 +1,26 @@
 Rails.application.routes.draw do
+  
+
+  # resources :users
+
+  # resources :golfers
+
+  # resources :groups do 
+  #     resources :teams 
+  #   end
+  # end
+
+  get "/" => 'pages#landing'
+
+  get "/register" => 'users#new'
+  post "/register" => 'users#create'
+  post '/users/create' => 'users#create'
+  get '/users/show/:id' => 'users#show'
+ 
+  get "/login" => 'sessions#login'
+
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

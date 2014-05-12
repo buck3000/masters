@@ -4,9 +4,7 @@ class CreateGolfersTable < ActiveRecord::Migration
 	  	t.string :golfer_api_id
 	  	t.string :first_name
 	  	t.string :last_name
-	  	t.string :college
-	  	t.string :height
-	  	t.integer :weight
+	  	t.string :country
 
 	  	t.integer :cuts_made
 	  	t.integer :world_rank
@@ -15,8 +13,8 @@ class CreateGolfersTable < ActiveRecord::Migration
 	  	t.integer :third_place
 	  	t.integer :top_10
 	  	t.integer :top_25
-
-	  	t.string :turned_pro
+	  	
+		
 	  	t.timestamps
   	end
   end

@@ -1,0 +1,35 @@
+// Place all the styles related to the User controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#new_user {
+	margin-top: 5%;
+	height: 30em;
+	width: 100%;
+	background-color: white;
+	form {
+		margin-top: 5%;
+		margin-left: 30%;
+		input {
+			margin-top: 2%;
+			border-radius: 5px;
+			width: 30em;
+			height: 5em;
+		}
+
+		input.button{
+			margin-left: -3%;
+			background-color: #06192E;
+			color: white;
+			font-weight: bold;
+			font-size: 1.1em;
+		}
+	}
+}
+
+h1.reg {
+	color: white;
+	text-align: center;
+	margin-bottom: -2%;
+	font-size: 2.5em;
+}	

@@ -1,0 +1,16 @@
+class GolfersController < ApplicationController
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+end
