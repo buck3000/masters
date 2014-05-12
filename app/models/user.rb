@@ -1,6 +1,9 @@
 class User < ActiveRecord::Base
-	has_many :teams
+	
+	validate :email, presence: true
+	validate :name, presence: true
 
+	has_many :teams
 
 
 	include BCrypt

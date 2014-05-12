@@ -8,6 +8,24 @@
 require 'open-uri'
 require 'awesome_print'
 require 'xmlsimple'
+require 'faker'
+
+200.times do
+	puts "Creating users..."
+	User.create(name: Faker::Name.name, email: Faker::Internet.email, password: Faker::Lorem.word)
+	puts "Users created..."
+	puts "-"*50
+end
+
+200.times do
+	Group.create(name: Faker::Lorem.word)
+
+end
+
+20.times do
+	Team.create(name: Faker::Lorem.word, user_id: User.all.sample.id, group_id: Group.all.sample.id)
+end
+
 
 key = ENV["SD_GOLF_API_KEY"]
 schedule_url = "http://api.sportsdatallc.org/golf-t1/schedule/pga/2014/tournaments/schedule.xml?api_key=#{key}"
@@ -25,7 +43,8 @@ tournament_schedule["season"][0]["tournament"].each do |tournament|
 									 venue: tournament["venue"]["name"],
 									 city: tournament["venue"]["city"],
 									 state: tournament["venue"]["state"],
-									 country: tournament["venue"]["country"])
+									 country: tournament["venue"]["country"],
+									 group_id: Group.all.sample.id )
 	end
 
 # player_url = "http://api.sportsdatallc.org/golf-t1/profiles/pga/2014/players/profiles.xml?api_key=#{key}"

@@ -1,6 +1,6 @@
 %h1.reg Register
 #new_user
-	= form_for :user, :remote => true, :authenticity_token => true do |f|
+	= form_for :user, :action => "/",:remote => true, :authenticity_token => true do |f|
 		= f.text_field :name, placeholder: "Name: Like... Harold Potter or whatever.", :type => "text", :name => "name", :class => "text"
 		= f.email_field :email, placeholder: "Email: HeWhoIsFrequentlyNamed@hotgmail.com", :type => "email", :name => "email", :class => "text"
 		= f.password_field :password, :placeholder => "Password: whatever you want your password to be.", :title => "8+ characters" 
