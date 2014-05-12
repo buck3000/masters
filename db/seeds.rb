@@ -11,25 +11,25 @@ require 'xmlsimple'
 require 'faker'
 
 200.times do
-	puts "Creating users..."
 	User.create(name: Faker::Name.name, email: Faker::Internet.email, password: Faker::Lorem.word)
-	puts "Users created..."
-	puts "-"*50
 end
+
+puts "Created Users"
+puts "-"*50
 
 20.times do
-	Group.create(name: Faker::Lorem.word)
+	Group.create(group_name: Faker::Lorem.word)
 end
+
+puts "Created Groups"
+puts "-"*50
 
 200.times do
-	Team.create(name: Faker::Lorem.word, user_id: User.all.sample.id, group_id: Group.all.sample.id)
+	Team.create(team_name: Faker::Lorem.word, user_id: User.all.sample.id, group_id: Group.all.sample.id)
 end
 
-Team.all.each do |team|
-	6.times do 
-		GolfersTeam.create(golfer_id: Golfer.all.sample.id, team_id: team.id)
-	end
-end
+puts "Created Teams"
+puts "-"*50
 
 
 key = ENV["SD_GOLF_API_KEY"]
@@ -37,7 +37,7 @@ schedule_url = "http://api.sportsdatallc.org/golf-t1/schedule/pga/2014/tournamen
 schedule_response = open(schedule_url).read
 
 
-tournament_schedule = XmlSimple.xml_in(schedule_response) 
+tournament_schedule = XmlSimple.xml_in(schedule_response)
 
 tournament_schedule["season"][0]["tournament"].each do |tournament|
 		Tournament.create(tournament_name: tournament["name"],
@@ -45,13 +45,15 @@ tournament_schedule["season"][0]["tournament"].each do |tournament|
 									 end_date: tournament["end_date"],
 									 end_date: tournament["end_date"],
 									 tournament_api_id: tournament["id"],
-									 venue: tournament["venue"]["name"],
-									 city: tournament["venue"]["city"],
-									 state: tournament["venue"]["state"],
-									 country: tournament["venue"]["country"],
+									 venue: tournament["venue"][0]["name"],
+									 city: tournament["venue"][0]["city"],
+									 state: tournament["venue"][0]["state"],
+									 country: tournament["venue"][0]["country"],
 									 group_id: Group.all.sample.id )
 	end
 
+puts "seeded Tournaments"
+puts "-"*50
 # player_url = "http://api.sportsdatallc.org/golf-t1/profiles/pga/2014/players/profiles.xml?api_key=#{key}"
 # player_response = open(player_url).read
 # golfer_profiles = XmlSimple.xml_in(player_response)
@@ -62,7 +64,7 @@ golfer_stats = XmlSimple.xml_in(player_stat_response)
 
 
 golfer_stats["season"][0]["player"].each do |player|
-	golfer = Golfer.create(first_name: player["first_name"],
+							  Golfer.create(first_name: player["first_name"],
 								last_name: player["last_name"],
 								country: player["country"],
 								cuts_made: player["statistics"][0]["cuts_made"],
@@ -75,6 +77,23 @@ golfer_stats["season"][0]["player"].each do |player|
 								golfer_api_id: player["id"])
 end
 
+puts "seeded Golfers"
+puts "-"*50
+
+Team.all.each do |team|
+	6.times do 
+		Golfers_Team.create(golfer_id: Golfer.all.sample.id, team_id: team.id)
+	end
+end
+
+puts "Randomized teams"
+puts "-"*50
+
+points = [1, 2, 3, 4]
+
+Tournament.all.each do |tournament|
+	Golfers_Tournament.create(golfer_id: Golfer.all.sample.id, tournament_id: Tournament.all.sample.id, golfer_tournament_points: points.sample)
+end
 
 
 # tournament_url = "http://api.sportsdatallc.org/golf-t1/leaderboard/pga/2014/tournaments/8d463c8b-e259-482d-8729-3c9efa877a22/leaderboard.xml?api_key=#{key}"

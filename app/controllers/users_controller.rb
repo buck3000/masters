@@ -13,7 +13,6 @@ class UsersController < ApplicationController
 	 @user.password = params[:password]
 	 if @user.save!
 	 	redirect_to '/'
-
 	 else
 	 	redirect_to '/show/:id'
 	 end
